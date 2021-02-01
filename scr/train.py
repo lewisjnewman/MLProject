@@ -6,7 +6,7 @@ import copy
 import random
 
 #TRAINING PARAMETERS
-POPULATION=100
+POPULATION=250
 NUM_GENERATIONS=2000
 MUTATION_CHANCE=0.05
 MUTATION_LIMIT=1
@@ -20,7 +20,7 @@ def calculate_fitness(result):
     #return average_player_score
     #return average_score_difference
 
-def play(nnplayer, games=25):
+def play(nnplayer, games=50):
     p2 = RandomPlayer()
 
     game = CompromiseGame(nnplayer, p2, 30, 10)
@@ -61,17 +61,15 @@ def breed_and_mutate(players, scores):
         player.nn.SetFromChromosomes(c)
         new_players[i] = (player, new_players[i][1])
 
-    # Add the mutated copies back in
-    players_with_scores += new_players
 
     merged_players = []
 
     # Fill the the missing population with mergers between random players
-    while len(players_with_scores) + len(merged_players) < POPULATION:
+    while len(players_with_scores) + len(merged_players) + len(new_players) < POPULATION:
 
-        # Choose 2 random players
-        p1 = random.choice(players_with_scores)[0]
-        p2 = random.choice(players_with_scores)[0]
+        # Choose 2 random players from the top 20%
+        p1 = random.choice(players_with_scores[8*len(players_with_scores)//10:])[0]
+        p2 = random.choice(players_with_scores[8*len(players_with_scores)//10:])[0]
 
         # Create a new player by merging their chromosomes
         p3_chromo = merge_chromosomes(p1.nn.GetChromosomes(), p2.nn.GetChromosomes())
@@ -81,6 +79,10 @@ def breed_and_mutate(players, scores):
         # Add this new player to the list of new players
         merged_players.append((p3,))
 
+    # Add the mutated copies back in
+    players_with_scores += new_players
+
+    # Add the new merged players in
     players_with_scores += merged_players
 
     """
