@@ -4,6 +4,7 @@ from CompromiseGame import CompromiseGame,RandomPlayer,GreedyPlayer,SmartGreedyP
 import multiprocessing
 import copy
 import random
+import sys
 
 #TRAINING PARAMETERS
 POPULATION=250
@@ -107,8 +108,26 @@ def main():
         pool = multiprocessing.Pool(processes=60)
 
         players = []
-        for _ in range(POPULATION):
-            players.append(NNPlayer())
+        if len(sys.argv) == 1:
+            # Generate Players from random
+            for _ in range(POPULATION):
+                players.append(NNPlayer())
+        else:
+            # Generate Players from existing neural network
+            p = NNPlayer()
+            p.nn = NeuralNetwork.load_json(sys.argv[1])
+            for _ in range(POPULATION):
+                players.append(copy.deepcopy(p))
+
+            # Run a mutation straight away so that we don't have N copies of the exact same player
+            # Leave 1 player unmutated
+            for i in range(1, len(players)):
+                player = players[i]
+                c = player.nn.GetChromosomes()
+                c = mutate_adjust_chromosomes(c, MUTATION_CHANCE, MUTATION_LIMIT)
+                player.nn.SetFromChromosomes(c)
+                players[i] = player
+
 
         for g in range(NUM_GENERATIONS):
             print(f"\nGeneration {g+1}")
