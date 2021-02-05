@@ -4,7 +4,7 @@ import multiprocessing
 import copy
 import numpy as np
 
-NETWORK_SHAPE=[5,5,2]
+NETWORK_SHAPE=[2,4,2]
 
 #TRAINING PARAMETERS
 POPULATION=30
@@ -16,8 +16,8 @@ def play(nn:NeuralNetwork, games=50):
     wins = 0
 
     for i in range(games):
-        val = [randint(0, 1), randint(0,1), randint(0, 1), randint(0,1), randint(0,1)]
-        expected = val[0] & val[1] | val[2] | val[3] ^ val[4]
+        val = [randint(0, 1), randint(0,1)]
+        expected = val[0] & val[1]
 
         outputs = nn.forward(val)
 

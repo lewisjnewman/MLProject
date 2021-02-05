@@ -28,7 +28,7 @@ axs[0].plot(np.convolve(mean_scores, np.ones(25)/25, mode='valid'), label="Windo
 axs[0].plot(gen_count, min_scores, label="Min Scores")
 axs[0].plot(np.convolve(min_scores, np.ones(25)/25, mode='valid'), label="Windowed Min Average")
 axs[0].grid(True,which="both",axis="y")
-#axs[0].legend()
+axs[0].legend()
 
 axs[1].plot(gen_count, max_winrates, label="Max winrates")
 axs[1].plot(np.convolve(max_winrates, np.ones(25)/25, mode='valid'), label="Windowed Max Average")
@@ -37,6 +37,6 @@ axs[1].plot(np.convolve(mean_winrates, np.ones(25)/25, mode='valid'), label="Win
 axs[1].plot(gen_count, min_winrates, label="Min winrates")
 axs[1].plot(np.convolve(min_winrates, np.ones(25)/25, mode='valid'), label="Windowed Min Average")
 axs[1].grid(True,which="both",axis="y")
-#axs[1].legend()
+axs[1].legend()
 
 plt.show()

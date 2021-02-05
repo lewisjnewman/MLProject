@@ -25,7 +25,7 @@ class NeuralNetwork(object):
 
     # Class for hidden layers
     class Layer(object):
-        """Composite Class to represent a layer within the neural network"""
+        """Nested Class to represent a layer within the neural network"""
 
         def __init__(self, input_size, neuron_count, output=False):
             """Init method builds a neural network layer from an input size and a neuron count"""
@@ -162,7 +162,6 @@ class NeuralNetwork(object):
             self.layers[i].biases = np.array(biases).reshape(1, self.layers[i].neuron_count)
 
 # Stuff to train the neural network with a genetic algorithm
-
 def mutate_adjust_chromosomes(chromosomes, probability, mutate_limit):
     """Given a set of chromosomes, a probability and a range, this algorithm
     mutates the chromosomes by some amount"""

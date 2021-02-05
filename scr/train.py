@@ -7,8 +7,8 @@ import random
 import sys
 
 #TRAINING PARAMETERS
-POPULATION=250
-NUM_GENERATIONS=2000
+POPULATION=50
+NUM_GENERATIONS=1000
 MUTATION_CHANCE=0.05
 MUTATION_LIMIT=1
 
@@ -17,12 +17,15 @@ def calculate_fitness(result):
     average_score_difference = result[1]
     winrate = result[2]
 
-    return winrate
-    #return average_player_score
-    #return average_score_difference
+#    return winrate
+    return average_player_score
+#    return average_score_difference
 
-def play(nnplayer, games=50):
-    p2 = RandomPlayer()
+def play(nnplayer, games=20):
+#    p2 = RandomPlayer()
+#    p2 = DeterminedPlayer()
+#    p2 = GreedyPlayer()
+    p2 = SmartGreedyPlayer()
 
     game = CompromiseGame(nnplayer, p2, 30, 10)
 

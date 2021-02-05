@@ -3,13 +3,25 @@ from NeuralNetwork import NeuralNetwork
 from CompromiseGame import CompromiseGame,RandomPlayer,GreedyPlayer,SmartGreedyPlayer,DeterminedPlayer
 
 import traceback
+import sys
+
+def play_one_game(p1, p2):
+    game = CompromiseGame(p1, p2, 30, 10)
+
+    results = game.play()
+
+
+    if results[0] > results[1]:
+        return True
+    else:
+        return False
 
 
 def main():
     p1 = NNPlayer()
-    p1.nn = NeuralNetwork.load_json("best_player.json")
+    p1.nn = NeuralNetwork.load_json(sys.argv[1])
 
-    p2 = RandomPlayer()
+    p2 = GreedyPlayer()
 
     game = CompromiseGame(p1, p2, 30, 10)
 
